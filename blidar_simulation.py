@@ -1,4 +1,4 @@
-# Version 3 - Noise, FOV, Stop Scan
+# Version 4 - Noise, FOV, Stop Scan, Parent Translation
 
 import bpy
 import bmesh
@@ -91,7 +91,10 @@ class BLIDAR_OT_StartScan(bpy.types.Operator):
         half_fov_radians = math.radians(fov / 2.0)
 
         # Get the LIDAR's forward direction (-Y axis in Blender)
-        forward_direction = obj.matrix_world.to_quaternion() @ mathutils.Vector((0, -1, 0)) 
+        forward_direction = obj.matrix_world.to_quaternion() @ mathutils.Vector((0, -1, 0))
+        
+        # Get the world position of the LIDAR object (handles parent transforms)
+        origin = obj.matrix_world.translation
 
         pointcloud = []
         bm = bmesh.new()
@@ -99,14 +102,11 @@ class BLIDAR_OT_StartScan(bpy.types.Operator):
             bm.from_mesh(obj.data)
 
         for i in range(resolution):
-            # angle = (fov * (np.pi / 180) / resolution) * i - (fov * (np.pi / 180) / 2)
             angle = (-half_fov_radians) + (i / (resolution - 1)) * math.radians(fov)
 
-            # direction = mathutils.Vector((math.cos(angle), math.sin(angle), 0))
             direction = forward_direction.copy()
             direction.rotate(mathutils.Euler((0, 0, angle), 'XYZ'))
 
-            origin = obj.location
             ray_max = range_val + random.uniform(-max(noise_x, noise_y, noise_z), max(noise_x, noise_y, noise_z))
 
             result = context.scene.ray_cast(depsgraph, origin, direction, distance=ray_max)

@@ -4,7 +4,6 @@ BLIDAR is a 2D LIDAR simulation plugin for Blender that allows you to assign any
 # Note: This plugin has not been tested for accuracy or robotics application yet. Please use at your own discretion! 
 
 ## To - Do
-- Fix translation issue when another mesh is parent (scneario where you place it on top of a moving robot).
 - Fix the CSV export
 - Allow pointcloud publishing in ROS/ROS2
 - Color the pointclouds
