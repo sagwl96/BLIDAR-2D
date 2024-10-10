@@ -26,7 +26,7 @@ BLIDAR is a 2D LIDAR simulation plugin for Blender that allows you to assign any
   - math and random for geometric calculations and randomness
 
 ## Installation
-- Download the blidar_simulation.py file from this repository.
+- Download the __blidar_simulation.py__ file from this repository.
 - Open Blender and go to Edit > Preferences > Add-ons.
 - Click Install, locate the blidar_simulation.py file, and install it.
 - Once installed, enable the BLIDAR 2D add-on from the Add-ons list.
